@@ -1,39 +1,9 @@
+var strava = require('./lib/strava');
 var async = require('async');
-var strava = require('strava-v3');
-var polyline = require('polyline');
 var fs = require('fs');
 
-var after = new Date('2015-11-11').getTime() / 1000;
-var before = new Date('2015-12-21').getTime() / 1000;
-
-var getActivitiesIds = function(callback) {
-    strava.athlete.listActivities({'after': after, 'before': before }, function (err, data) {
-        if (err) {
-            console.log(err);
-            callback(err);
-        } else {
-            var ids = data.map(function(row) {
-                return row.id;
-            });
-            console.log('Got activity ids ' + JSON.stringify(ids));
-            callback(null, ids);
-        }
-    });
-};
-var retrieveActivityStream = function(activityId, callback) {
-    strava.streams.activity({'id': activityId, 'types': ['latlng']}, function (err, data) {
-        if (err) {
-            console.log(err);
-            callback(err);
-        } else {
-            console.log('Retrieved stream for ' + activityId);
-            callback(null, polyline.encode(data[0].data));
-        }
-    });
-};
-
 var getActivities = function(idList, callback) {
-    async.map(idList, retrieveActivityStream, function(err, results) {
+    async.map(idList, strava.retrieveActivityStream, function(err, results) {
         if (err) {
             console.log(err);
             callback(err);
@@ -50,4 +20,8 @@ var outputStreams = function(streams, callback) {
     callback(null);
 };
 
-async.waterfall([getActivitiesIds, getActivities, outputStreams]);
+async.waterfall([
+    strava.getActivitiesIdsBetweenDates(new Date('2015-11-11'), new Date('2015-12-21')),
+    getActivities,
+    outputStreams
+]);
