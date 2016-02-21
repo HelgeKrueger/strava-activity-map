@@ -1,21 +1,32 @@
-var L = require('leaflet');
+var express = require('express');
+var strava = require('./lib/strava');
 
-L.Icon.Default.imagePath = 'node_module/leaflet/dist/images/';
+var port = 3000;
 
-var lineOptions = {
-    color: 'red',
-    weight: 3,
-    opacity: 0.7,
-    lineJoin: 'round'
-};
-var tiles = 'http://c.tile.stamen.com/watercolor/{z}/{x}/{y}.jpg';
+var app = express();
 
-var polylines = require('./activities.js');
-var lines = L.multiPolyline(polylines, lineOptions);
-var bounds = lines.getBounds();
+app.use(express.static('static'));
 
-var map = L.map('map');
-map.fitBounds(bounds);
-var layer = L.tileLayer(tiles, {maxZoom: 18});
-layer.addTo(map);
-lines.addTo(map);
+app.get('/activities', function(req, res) {
+    var after = new Date('2016-01-01');
+    var before = new Date('2016-12-31');
+    var retrieveFunction = strava.getActivitiesIdsBetweenDates(after, before);
+
+    retrieveFunction(function(err, data) {
+        if (err) {
+            throw err;
+        }
+        res.send(data);
+    });
+});
+
+app.get('/activity/:id', function(req, res) {
+    strava.retrieveActivityStream(req.params.id, function(err, data) {
+        res.send(data);
+    });
+});
+
+app.listen(port, function() {
+    console.log('Listening on port: ' + port);
+});
+
