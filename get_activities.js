@@ -13,7 +13,7 @@ var getActivitiesIds = function(callback) {
             callback(err);
         } else {
             var ids = data.map(function(row) {
-                return row['id'];
+                return row.id;
             });
             console.log('Got activity ids ' + JSON.stringify(ids));
             callback(null, ids);
@@ -22,14 +22,24 @@ var getActivitiesIds = function(callback) {
 };
 var retrieveActivityStream = function(activityId, callback) {
     strava.streams.activity({'id': activityId, 'types': ['latlng']}, function (err, data) {
-        console.log('Retrieved stream for ' + activityId);
-        callback(null, polyline.encode(data[0]['data']));
+        if (err) {
+            console.log(err);
+            callback(err);
+        } else {
+            console.log('Retrieved stream for ' + activityId);
+            callback(null, polyline.encode(data[0].data));
+        }
     });
 };
 
 var getActivities = function(idList, callback) {
     async.map(idList, retrieveActivityStream, function(err, results) {
-        callback(null, results);
+        if (err) {
+            console.log(err);
+            callback(err);
+        } else {
+            callback(null, results);
+        }
     });
 };
 

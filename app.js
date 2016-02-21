@@ -6,7 +6,7 @@ L.Icon.Default.imagePath = 'node_module/leaflet/dist/images/';
 var lineOptions = {
     color: 'red',
     weight: 3,
-    opacity: .7,
+    opacity: 0.7,
     lineJoin: 'round'
 };
 var tiles = 'http://c.tile.stamen.com/watercolor/{z}/{x}/{y}.jpg';
