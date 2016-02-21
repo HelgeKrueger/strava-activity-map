@@ -6,7 +6,8 @@
   "scripts": {
     "start": "beefy app.js:bundle.js --live",
     "bundle": "browserify app.js -o bundle.js",
-    "jshint": "jshint *.js lib/**.js"
+    "jshint": "jshint *.js lib/**.js",
+    "test": "mocha"
   },
   "author": "",
   "license": "MIT",
@@ -18,6 +19,7 @@
   "devDependencies": {
     "beefy": "^2.1.5",
     "browserify": "^12.0.1",
-    "jshint": "^2.9.1"
+    "jshint": "^2.9.1",
+    "mocha": "^2.4.5"
   }
 }
