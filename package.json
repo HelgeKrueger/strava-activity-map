@@ -6,10 +6,10 @@
   "scripts": {
     "start": "beefy app.js:bundle.js --live",
     "bundle": "browserify app.js -o bundle.js",
-    "jshint": "jshint *.js lib/**.js",
+    "jshint": "jshint *.js lib/**.js test/**.js",
     "test": "mocha"
   },
-  "author": "",
+  "author": "Helge Krueger",
   "license": "MIT",
   "dependencies": {
     "async": "^1.5.0",
