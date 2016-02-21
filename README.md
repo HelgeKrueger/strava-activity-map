@@ -8,11 +8,11 @@ One can change the tile server and thus the look of the map by editing the `tile
 
 ## Installation
 
-* Set your Strava access token in the environment variable $STRAVA_ACCESS_TOKEN
+* Set your Strava access token in the environment variable `$STRAVA_ACCESS_TOKEN`
 * Edit `get_activities.js` with the information on the time period.
 * Install required packages with
 ```
-nvm install
+npm install
 ```
 * Fetch the Strava activities with
 ```
