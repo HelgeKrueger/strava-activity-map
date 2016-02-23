@@ -16,21 +16,32 @@ var layer = L.tileLayer(tiles, {maxZoom: 18});
 var map = L.map('map').setView([51.505, -0.09], 13);
 layer.addTo(map);
 
+var tracks = [];
+
+var addTracksToMap = function(tracks, map) {
+    var lines = L.multiPolyline(tracks, lineOptions);
+    var bounds = lines.getBounds();
+    map.fitBounds(bounds);
+    lines.addTo(map);
+};
+
 var getActivity = function(activityId, callback) {
     $.getJSON('activity/' + activityId, function(track) {
+        tracks.push(track);
+        addTracksToMap(tracks, map);
+        console.log('number of plotted tracks: ' + tracks.length);
         callback(null, track);
     });
 };
 
+
 $.getJSON('activities', function(idList) {
-    async.map(idList, getActivity, function(err, results) {
+    console.log('number of activities: ' + idList.length);
+    async.mapSeries(idList, getActivity, function(err, results) {
         if (err) {
             console.log(err);
         } else {
-            var lines = L.multiPolyline(results, lineOptions);
-            var bounds = lines.getBounds();
-            map.fitBounds(bounds);
-            lines.addTo(map);
+            console.log('Done plotting');
         }
     });
 });

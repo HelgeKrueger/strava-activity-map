@@ -5,6 +5,7 @@ var port = 3000;
 
 var app = express();
 
+app.disable('etag');
 app.use(express.static('static'));
 
 app.get('/activities', function(req, res) {
@@ -20,10 +21,19 @@ app.get('/activities', function(req, res) {
     });
 });
 
+var memo = {someid: '12'};
+
 app.get('/activity/:id', function(req, res) {
-    strava.retrieveActivityStream(req.params.id, function(err, data) {
-        res.send(data);
-    });
+    var activityId = req.params.id;
+    if (activityId in memo) {
+        console.log('Answering from memory');
+        res.send(memo[activityId]);
+    } else {
+        strava.retrieveActivityStream(req.params.id, function(err, data) {
+            memo[activityId] = data;
+            res.send(data);
+        });
+    }
 });
 
 app.listen(port, function() {
