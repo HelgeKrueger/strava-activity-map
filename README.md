@@ -6,6 +6,8 @@ One can change the tile server and thus the look of the map by editing the `tile
 
 Currently, the fetched date range is hard coded in `app.js`.
 
+![Example](doc/example.png)
+
 ## Installation
 
 * Set your Strava access token in the environment variable `$STRAVA_ACCESS_TOKEN`
