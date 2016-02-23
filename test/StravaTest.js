@@ -4,6 +4,7 @@ var strava = require('../lib/strava');
 
 describe('Strava utility functions', function() {
     it('can retrieve an activity from 2016 from strava', function(done) {
+        this.timeout(10000); // The requests take a LOOOOONG time
         var after = new Date('2016-01-01');
         var before = new Date('2016-12-31');
         var retrieveFunction = strava.getActivitiesIdsBetweenDates(after, before);
