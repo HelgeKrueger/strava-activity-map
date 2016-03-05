@@ -19,7 +19,7 @@ describe('Strava utility functions', function() {
                 if (err) {
                     throw err;
                 }
-                assert(data.length > 100, 'first activity contains more than 100 data points');
+                assert(data.length > 10, 'first activity contains more than 10 data points');
                 assert.equal(data[0].length, 2, 'data points are of the form [lat, lng]');
                 done();
             });
