@@ -9,8 +9,11 @@ app.disable('etag');
 app.use(express.static('static'));
 
 app.get('/activities', function(req, res) {
-    var after = new Date('2016-01-01');
-    var before = new Date('2016-12-31');
+    var after = new Date(req.query.after);
+    var before = new Date(req.query.before);
+
+    console.log('Requesting activities from ' + after + ' to ' + before);
+
     var retrieveFunction = strava.getActivitiesIdsBetweenDates(after, before);
 
     retrieveFunction(function(err, data) {

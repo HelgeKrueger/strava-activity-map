@@ -34,8 +34,10 @@ var getActivity = function(activityId, callback) {
     });
 };
 
+var params = {after: '2016-01-01', before: '2016-12-31'};
+var url = 'activities?' + $.param(params);
 
-$.getJSON('activities', function(idList) {
+$.getJSON(url, function(idList) {
     console.log('number of activities: ' + idList.length);
     async.mapSeries(idList, getActivity, function(err, results) {
         if (err) {
