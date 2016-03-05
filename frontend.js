@@ -4,20 +4,19 @@ var plotter = require('./plotter');
 
 var DateChangeControl = L.Control.extend({
     options: { position: 'topright' },
+    addInput: function(name, type, value, container) {
+        this[name] = L.DomUtil.create('input', name, container);
+        this[name].type = type;
+        this[name].value = value;
+    },
     onAdd: function(map) {
         var container = L.DomUtil.create('div', 'date-change');
         this.form = L.DomUtil.create('form', 'form', container);
-        this.after = L.DomUtil.create('input', 'after', this.form);
-        this.after.type = 'text';
-        this.after.value = '2016-01-01';
-        this.linebreak1 = L.DomUtil.create('br', 'linebreak', this.form);
-        this.before = L.DomUtil.create('input', 'before', this.form);
-        this.before.type = 'text';
-        this.before.value = '2016-12-31';
-        this.linebreak2 = L.DomUtil.create('br', 'linebreak2', this.form);
-        this.input = L.DomUtil.create('input', 'change', this.form);
-        this.input.type = 'button';
-        this.input.value = 'change';
+        this.addInput('after', 'text', '2016-01-01', this.form);
+        L.DomUtil.create('br', 'linebreak', this.form);
+        this.addInput('before', 'text', '2016-12-31', this.form);
+        L.DomUtil.create('br', 'linebreak', this.form);
+        this.addInput('input', 'button', 'Fetch Map', this.form);
         L.DomEvent.addListener(this.input, 'click', this.updateMap, this);
         return container;
     },
