@@ -11,9 +11,13 @@ var lineOptions = {
 
 var plotBetween = function(map, after, before) {
     var tracks = [];
+    var lines = null;
 
     var addTracksToMap = function(tracks, map) {
-        var lines = L.multiPolyline(tracks, lineOptions);
+        if (lines) {
+            map.removeLayer(lines);
+        }
+        lines = L.multiPolyline(tracks, lineOptions);
         var bounds = lines.getBounds();
         map.fitBounds(bounds);
         lines.addTo(map);
