@@ -26,4 +26,19 @@ describe('Strava utility functions', function() {
         });
 
     });
+
+    it('can retrieve polylines from 2016 from strava', function() {
+        this.timeout(10000); // The requests take a LOOOOONG time
+        var after = new Date('2016-01-01');
+        var before = new Date('2016-12-31');
+        var retrieveFunction = strava.getSummaryPolylines(after, before);
+
+        retrieveFunction(function(err, data) {
+            if (err) {
+                throw err;
+            }
+            assert(data[0], '1 id was retrieved');
+        });
+
+    });
 });
