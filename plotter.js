@@ -8,9 +8,9 @@ var lineOptions = {
     opacity: 0.3,
     lineJoin: 'round'
 };
+var lines = null;
 
 var plotBetween = function(map, after, before, type) {
-    var lines = null;
 
     var addTracksToMap = function(tracks, map) {
         if (lines) {
