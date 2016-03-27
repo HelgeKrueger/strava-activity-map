@@ -10,7 +10,6 @@ var lineOptions = {
 };
 
 var plotBetween = function(map, after, before) {
-    var tracks = [];
     var lines = null;
 
     var addTracksToMap = function(tracks, map) {
@@ -23,27 +22,11 @@ var plotBetween = function(map, after, before) {
         lines.addTo(map);
     };
 
-    var getActivity = function(activityId, callback) {
-        $.getJSON('activity/' + activityId, function(track) {
-            tracks.push(track);
-            addTracksToMap(tracks, map);
-            console.log('number of plotted tracks: ' + tracks.length);
-            callback(null, track);
-        });
-    };
-
     var params = {after: after, before: before};
-    var url = 'activities?' + $.param(params);
+    var url = 'polylines?' + $.param(params);
 
-    $.getJSON(url, function(idList) {
-        console.log('number of activities: ' + idList.length);
-        async.mapSeries(idList, getActivity, function(err, results) {
-            if (err) {
-                console.log(err);
-            } else {
-                console.log('Done plotting');
-            }
-        });
+    $.getJSON(url, function(polylines) {
+        addTracksToMap(polylines, map);
     });
 };
 
