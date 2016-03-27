@@ -5,7 +5,7 @@ var async = require('async');
 var lineOptions = {
     color: 'red',
     weight: 3,
-    opacity: 0.7,
+    opacity: 0.3,
     lineJoin: 'round'
 };
 
@@ -23,10 +23,12 @@ var plotBetween = function(map, after, before) {
     };
 
     var params = {after: after, before: before};
-    var url = 'polylines?' + $.param(params);
+    var url = 'summary?' + $.param(params);
 
-    $.getJSON(url, function(polylines) {
-        addTracksToMap(polylines, map);
+    $.getJSON(url, function(data) {
+        addTracksToMap(data.map(function(row) {
+            return row.polyline;
+        }), map);
     });
 };
 

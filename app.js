@@ -44,6 +44,22 @@ app.get('/polylines', function(req, res) {
     });
 });
 
+app.get('/summary', function(req, res) {
+    var after = new Date(req.query.after);
+    var before = new Date(req.query.before);
+
+    console.log('Requesting activities from ' + after + ' to ' + before);
+
+    var retrieveFunction = strava.getAllSummary(after, before);
+
+    retrieveFunction(function(err, data) {
+        if (err) {
+            throw err;
+        }
+        res.send(data);
+    });
+});
+
 var memo = {someid: '12'};
 
 app.get('/activity/:id', function(req, res) {
