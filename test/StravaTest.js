@@ -57,4 +57,21 @@ describe('Strava utility functions', function() {
             done();
         });
     });
+
+    it('restricts to rides for summary', function(done) {
+        this.timeout(10000); // The requests take a LOOOOONG time
+        var after = new Date('2016-01-01');
+        var before = new Date('2016-12-31');
+        var retrieveFunction = strava.getAllSummary(after, before, 'Ride');
+
+        retrieveFunction(function(err, data) {
+            if (err) {
+                throw err;
+            }
+            assert(data.every(function(row) {
+                return row.type === 'Ride';
+            }), 'only rides retrieved');
+            done();
+        });
+    });
 });

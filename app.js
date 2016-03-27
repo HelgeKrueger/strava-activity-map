@@ -47,10 +47,11 @@ app.get('/polylines', function(req, res) {
 app.get('/summary', function(req, res) {
     var after = new Date(req.query.after);
     var before = new Date(req.query.before);
+    var type = req.query.type;
 
     console.log('Requesting activities from ' + after + ' to ' + before);
 
-    var retrieveFunction = strava.getAllSummary(after, before);
+    var retrieveFunction = strava.getAllSummary(after, before, type);
 
     retrieveFunction(function(err, data) {
         if (err) {

@@ -9,7 +9,7 @@ var lineOptions = {
     lineJoin: 'round'
 };
 
-var plotBetween = function(map, after, before) {
+var plotBetween = function(map, after, before, type) {
     var lines = null;
 
     var addTracksToMap = function(tracks, map) {
@@ -22,7 +22,11 @@ var plotBetween = function(map, after, before) {
         lines.addTo(map);
     };
 
-    var params = {after: after, before: before};
+    var params = {
+        after: after,
+        before: before,
+        type: type
+    };
     var url = 'summary?' + $.param(params);
 
     $.getJSON(url, function(data) {

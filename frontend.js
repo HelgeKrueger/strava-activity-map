@@ -9,6 +9,12 @@ var DateChangeControl = L.Control.extend({
         this[name].type = type;
         this[name].value = value;
     },
+    addTypeSelect: function(container) {
+        this.typeSelect = L.DomUtil.create('select', 'type-select', container);
+        this.typeSelect.innerHTML = '<option value="">All</option>';
+        this.typeSelect.innerHTML += '<option value="Ride">Ride</option>';
+        this.typeSelect.innerHTML += '<option value="Run">Run</option>';
+    },
     onAdd: function(map) {
         var container = L.DomUtil.create('div', 'date-change');
         this.form = L.DomUtil.create('form', 'form', container);
@@ -16,12 +22,14 @@ var DateChangeControl = L.Control.extend({
         L.DomUtil.create('br', 'linebreak', this.form);
         this.addInput('before', 'text', '2016-12-31', this.form);
         L.DomUtil.create('br', 'linebreak', this.form);
+        this.addTypeSelect(this.form);
+        L.DomUtil.create('br', 'linebreak', this.form);
         this.addInput('input', 'button', 'Fetch Map', this.form);
         L.DomEvent.addListener(this.input, 'click', this.updateMap, this);
         return container;
     },
     updateMap: function(e) {
-        plotter.plotBetween(this._map, this.after.value, this.before.value);
+        plotter.plotBetween(this._map, this.after.value, this.before.value, this.typeSelect.value);
     }
 });
 
