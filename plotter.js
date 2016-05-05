@@ -3,7 +3,7 @@ var $ = require('jquery');
 var _ = require('underscore');
 var async = require('async');
 
-var Plotter = function() {
+var Plotter = function(map) {
     this.lines = null;
     this.lineOptions = {
         color: 'blue',
@@ -11,9 +11,6 @@ var Plotter = function() {
         opacity: 0.3,
         lineJoin: 'round'
     };
-};
-
-Plotter.prototype.setMap = function(map) {
     this.map = map;
 };
 
