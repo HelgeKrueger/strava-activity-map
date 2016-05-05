@@ -1,6 +1,8 @@
 var L = require('leaflet');
 var $ = require('jquery');
-var plotter = require('./plotter');
+var Plotter = require('./plotter');
+
+var plotter = new Plotter();
 
 var DateChangeControl = L.Control.extend({
     options: { position: 'topright' },
@@ -29,7 +31,7 @@ var DateChangeControl = L.Control.extend({
         return container;
     },
     updateMap: function(e) {
-        plotter.plotBetween(this._map, this.after.value, this.before.value, this.typeSelect.value);
+        plotter.plotBetween(this.after.value, this.before.value, this.typeSelect.value);
     }
 });
 
@@ -40,6 +42,7 @@ var tiles = 'http://a.tile.openstreetmap.org/{z}/{x}/{y}.png';
 var layer = L.tileLayer(tiles, {maxZoom: 18});
 var map = L.map('map').setView([51.505, -0.09], 13);
 layer.addTo(map);
+plotter.setMap(map);
 var dateChange = new DateChangeControl();
 dateChange.addTo(map);
 
