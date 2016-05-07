@@ -1,7 +1,6 @@
 var assert = require('assert');
 var strava = require('../lib/strava');
 
-
 describe('Strava utility functions', function() {
     it('can retrieve an activity from 2016 from strava', function(done) {
         this.timeout(10000); // The requests take a LOOOOONG time

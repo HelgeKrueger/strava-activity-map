@@ -1,6 +1,6 @@
 var L = require('leaflet');
 var $ = require('jquery');
-var Plotter = require('./plotter');
+var Plotter = require('./lib/plotter');
 var DateChangeControl = require('./lib/DateChangeControl');
 
 //var tiles = 'http://c.tile.stamen.com/watercolor/{z}/{x}/{y}.jpg';
