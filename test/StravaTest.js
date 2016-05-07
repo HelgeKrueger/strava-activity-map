@@ -54,6 +54,9 @@ describe('Strava utility functions', function() {
                 throw err;
             }
             assert(data.length > 200, 'more than 200 activities were retrieved');
+            assert(data[0].type, 'Actvity contains a type');
+            assert(data[0].polyline, 'Actvity contains a polyline');
+            assert(data[0].id, 'Actvity contains its id');
             done();
         });
     });
